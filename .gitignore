@@ -1,0 +1,7 @@
+.vscode/*
+dist/*
+build/*
+*.egg*
+*__pycache__*
+gfpgan/weights/*.pth
+importTime.csv
