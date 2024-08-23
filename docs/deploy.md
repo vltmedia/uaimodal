@@ -109,12 +109,30 @@ Initializes a container with the given parameters, including optional file downl
 
 To use the `Deploy` module, first import it and then initialize it with the desired configuration:
 
-```python
-from uaimodal.deploy import Deploy
 
-deploy = Deploy()
-deploy.installPythonRequirementsLocal('requirements.txt')
-deploy.copyLocalFiles(['/path/to/file'])
+```python
+import uaimodal
+
+uModal = uaimodal.initUAIContainer("testToKill-01", python_version= "3.11",firebaseServiceJson= "user.json",cudaVersion=12.4, ffmpeg=True, newDirectories=["/root/datasets/input"])
+uModal.installGitModule( "https://github.com/OpenTalker/video-retalking","/root")
+uModal.downloadFile( "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4", "/root/BigBuckBunny.mp4" )
+uModal.copyLocalFileAndDirectories([["checkpoints.zip", "/root/checkpoints.zip"]])
+uModal.unzipFile( "/root/checkpoints.zip", "/root")
+uModal.installCMake()
+uModal.installPythonRequirementsServer( "/root/requirements.txt")
+uModal.copyLocalFileAndDirectories( [
+    ["usersilence.wav", "/root/usersilence.wav"],
+    ["short.wav", "/root/short.wav"],
+    ["testVideo.mp4", "/root/testVideo.mp4"]
+    ["extract_kp_videos.py", "/root/third_part/face3d/extract_kp_videos.py"]
+                                ])
+# Always call this to apply the image to the application
+uModal.applyAppImage()
+
+# These are the modal objects ready to be consumed.
+app = uModal.app
+image = uModal.image
+
 ```
 
 This will set up your container with the specified Python dependencies and files.
