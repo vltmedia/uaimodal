@@ -364,7 +364,7 @@ class UAIModal():
         """
         (
             self
-            .run_commands([f"git clone {gitUrl} /root/tempDir && cp -r /root/tempDir/. {outputPath}/ && rm -rf /root/tempDir"])
+            .run_commands([f"git clone --recursive {gitUrl} /root/tempDir && cp -r /root/tempDir/. {outputPath}/ && rm -rf /root/tempDir"])
         )
         return self.image
 
@@ -498,20 +498,20 @@ def initContainer(appName:str="untitled", baseClass: Image =Image.debian_slim, p
     return image
 
 
-def initUAIContainer(appName="untitled", python_version = "3.11", firebaseServiceJson = "", cudaVersion=12.4) -> UAIModal:
+def initUAIContainer(appName="untitled", python_version = "3.11", firebaseServiceJson = "", cudaVersion=12.4, pytorchCustom = "") -> UAIModal:
     
     uModal = initContainer(appName=appName, baseClass= modal.Image.debian_slim, python_version = python_version)
     uModal.installUtils()
     uModal.installFlask()
-    uModal.installPytorch( cudaVersion=cudaVersion)
+    uModal.installPytorch( cudaVersion=cudaVersion, customCommand=pytorchCustom)
     uModal.installMoviePy()
     if firebaseServiceJson != "":
         uModal.installFirebase( firebaseServiceJson)
     uModal.applyAppImage()
     return uModal
 
-def initFullAppContainer(appName="untitled", python_version = "3.11", firebaseServiceJson = "", cudaVersion=12.4, fileDirectories =[], cmake=False,filesToDownload=[], filesToUnzip=[],gitModules=[], requirementsLocal="", requirementsServer="",postFunctions=[]) -> UAIModal:
-    uModal = initUAIContainer(appName=appName, python_version=python_version, firebaseServiceJson=firebaseServiceJson, cudaVersion=cudaVersion)
+def initFullAppContainer(appName="untitled", python_version = "3.11", firebaseServiceJson = "", cudaVersion=12.4, fileDirectories =[], cmake=False,filesToDownload=[], filesToUnzip=[],gitModules=[], requirementsLocal="", requirementsServer="",postFunctions=[], pytorchCustom = "") -> UAIModal:
+    uModal = initUAIContainer(appName=appName, python_version=python_version, firebaseServiceJson=firebaseServiceJson, cudaVersion=cudaVersion,pytorchCustom=pytorchCustom)
     for gitModule in gitModules:
         uModal.installGitModule(gitModule[0], gitModule[1])
     if cmake:
