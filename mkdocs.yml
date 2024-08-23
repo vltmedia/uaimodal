@@ -1,11 +1,7 @@
-site_name: "UAI Diffusers"
+site_name: "UAI Modal"
 nav:
   - "Home": index.md
-  - "Classes": classes.md
-  - "uaimodal": uaimodal.md
-  - "sadTalk": sadtalk.md
-  - "hair": hair.md
-  - "merger": pipelines_merger.md
+  - "Deploy": deploy.md
 theme:
   name: "material"
   features:

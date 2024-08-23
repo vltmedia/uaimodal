@@ -31,8 +31,6 @@ class UAIModal():
         """
         Install necessary utilities in the given image.
 
-        Args:
-            image (Image): The image to install utilities in.
 
         Returns:
             Image: The updated image with utilities installed.
@@ -52,9 +50,6 @@ class UAIModal():
         """
         Installs Flask and Flask-Cors packages in the given image.
 
-        Args:
-            image (Image): The image to install the packages in.
-
         Returns:
             Image: The updated image with the packages installed.
         """
@@ -69,7 +64,6 @@ class UAIModal():
         Installs Python requirements from a given file into the specified Docker image.
 
         Args:
-            image (Image): The Docker image to install the requirements into.
             localPath (str, optional): The path to the requirements file on the local machine. Defaults to "requirements.txt".
 
         Returns:
@@ -86,7 +80,6 @@ class UAIModal():
         Installs Python requirements from a given requirements.txt file on the server.
 
         Args:
-            image (Image): The Docker image on which the requirements will be installed.
             serverPath (str, optional): The path to the requirements.txt file on the server. Defaults to "/root/requirements.txt".
 
         Returns:
@@ -102,7 +95,6 @@ class UAIModal():
         Copies local directories to the image.
 
         Args:
-            image (Image): The image to which directories will be copied.
             paths (list): A list of directories to copy. Each item is a list containing:
                 - 'inputPath'[0] (str): The path of the directory to copy.
                 - 'outputPath'[1] (str): The path where the directory will be copied to. If not provided, the directory will be copied to the root directory of the image.
@@ -129,7 +121,6 @@ class UAIModal():
         Copy local files and directories to the specified image.
 
         Args:
-            image (Image): The image to which the files will be copied.
             files (list, optional): A list of files and directories to be copied. Defaults to an empty list. Each item is a list containing:
                 - 'inputPath'[0] (str): The path of the directory to copy.
                 - 'outputPath'[1] (str): The path where the directory will be copied to. If not provided, the directory will be copied to the root directory of the image.
@@ -148,7 +139,6 @@ class UAIModal():
         Copy local directories to the specified image.
 
         Args:
-            image (Image): The image to copy the directories to.
             directories (list, optional): List of directories to copy. Defaults to an empty list. Each item is a list containing:
                 - 'inputPath'[0] (str): The path of the directory to copy.
                 - 'outputPath'[1] (str): The path where the directory will be copied to. If not provided, the directory will be copied to the root directory of the image.
@@ -158,6 +148,21 @@ class UAIModal():
             Image: The updated image with the copied directories.
         """
         self.copyLocalFileAndDirectories( directories)
+        return self.image
+
+    def makeDirectories (self, directories: list = []):
+        """
+        Make directories in the specified image.
+
+        Args:
+            directories (list, optional): List of directories to copy. Defaults to an empty list
+
+
+        Returns:
+            Image: The updated image with the copied directories.
+        """
+        for directory in directories:
+            self.image.run_commands([f"mkdir -p {directory}"])
         return self.image
 
         
@@ -186,7 +191,6 @@ class UAIModal():
         Sets an environment variable in the image.
 
         Args:
-            image (Image): The image to which the environment variable will be added.
             variable (dict): A dictionary containing the environment variable to set.
 
         Returns:
@@ -201,7 +205,6 @@ class UAIModal():
         Sets multiple environment variables in the image.
 
         Args:
-            image (Image): The image to which the environment variables will be added.
             variables (list): A list of dictionaries containing the environment variables to set.
 
         Returns:
@@ -220,7 +223,6 @@ class UAIModal():
         Runs a list of functions on the given image.
 
         Parameters:
-        image (Image): The image object on which the functions will be run.
         functions (list): A list of dictionaries representing the functions to be run. Each dictionary should contain the following keys:
             - 'gpu' (int): The number of GPUs to allocate for the function (default: None).
             - 'cpu' (float): The number of CPU cores to allocate for the function (default: None).
@@ -252,7 +254,6 @@ class UAIModal():
         Installs Firebase and copies the service account file to the image.
 
         Args:
-            image (Image): The image to which Firebase will be installed.
             serviceFile (str): The path to the service account file.
 
         Returns:
@@ -268,8 +269,6 @@ class UAIModal():
         """
         Installs CMake and dlib on the given image.
 
-        Args:
-            image (Image): The image on which to install CMake and dlib.
 
         Returns:
             Image: The updated image with CMake and dlib installed.
@@ -284,8 +283,6 @@ class UAIModal():
         """
         Installs FFMPEG and required libraries in the given Docker image.
 
-        Args:
-            image (Image): The Docker image to install FFMPEG in.
 
         Returns:
             Image: The modified Docker image with FFMPEG installed.
@@ -331,7 +328,6 @@ class UAIModal():
         Installs PyTorch with the specified CUDA version or a custom command.
 
         Args:
-            image (Image): The image to which PyTorch will be installed.
             cudaVersion (int): The CUDA version to use for the installation. Default is 12.4.
             customCommand (str): A custom command to use for the installation. If provided, this will override the CUDA version.
 
@@ -355,7 +351,6 @@ class UAIModal():
         Clones a git repository from the specified URL and copies its contents to the specified output path.
 
         Args:
-            image (Image): The image object to perform the installation on.
             gitUrl (str): The URL of the git repository to clone.
             outputPath (str, optional): The path where the cloned repository contents will be copied to. Defaults to "/root".
 
@@ -372,8 +367,6 @@ class UAIModal():
         """
         Installs OpenCV and its dependencies on the provided image.
 
-        Args:
-            image (Image): The image on which OpenCV needs to be installed.
 
         Returns:
             Image: The updated image with OpenCV installed.
@@ -390,8 +383,6 @@ class UAIModal():
         """
         Installs the MoviePy library in the given image.
 
-        Args:
-            image (Image): The image to install MoviePy in.
 
         Returns:
             Image: The updated image with MoviePy installed.
@@ -408,8 +399,6 @@ class UAIModal():
         """
         Installs the MediaPipe library.
 
-        Args:
-            image (Image): The input image.
 
         Returns:
             Image: The input image.
@@ -424,8 +413,6 @@ class UAIModal():
         """
         Installs CUDA 12.4 on the specified image.
 
-        Args:
-            image (Image): The image on which CUDA 12.4 will be installed.
 
         Returns:
             Image: The modified image with CUDA 12.4 installed.
@@ -450,7 +437,6 @@ class UAIModal():
         Downloads a file from the specified URL and saves it to the specified output path.
 
         Args:
-            image (Image): The image to download the file in.
             url (str): The URL of the file to download.
             outputPath (str): The path to save the downloaded file.
 
@@ -466,7 +452,6 @@ class UAIModal():
         Unzips a file at the specified path and saves it to the specified output path.
 
         Args:
-            image (Image): The image to unzip the file in.
             filePath (str): The path of the file to unzip.
             outputPath (str): The path to save the unzipped file.
 
@@ -495,12 +480,29 @@ def initContainer(appName:str="untitled", baseClass: Image =Image.debian_slim, p
     """
     
     uModal = UAIModal(appName=appName,python_version=python_version,baseClass=baseClass)
-    return image
+    return uModal
 
 
-def initUAIContainer(appName="untitled", python_version = "3.11", firebaseServiceJson = "", cudaVersion=12.4, pytorchCustom = "",ffmpeg=True) -> UAIModal:
+ 
+def initUAIContainer(appName="untitled", python_version = "3.11", firebaseServiceJson = "", cudaVersion=12.4, pytorchCustom = "",ffmpeg=True, newDirectories=[]) -> UAIModal:
+    """
+    Create a new container that UAI usually uses for its applications.
+
+    Args:
+        appName (str, optional): The name of the application. Defaults to "untitled".
+        python_version (str, optional): The version of Python to be used in the container. Defaults to "3.11".
+        firebaseServiceJson (str, optional): The path to the Firebase service account JSON file. Defaults to "".
+        cudaVersion (float, optional): The version of CUDA to be installed. Defaults to 12.4.
+        pytorchCustom (str, optional): Custom command for installing PyTorch. Defaults to "".
+        ffmpeg (bool, optional): Whether to install FFMPEG. Defaults to True.
+        newDirectories (list, optional): List of new directories to be created in the container. Defaults to [].
+
+    Returns:
+        UAIModal: The initialized UAIModal object.
+    """
     
     uModal = initContainer(appName=appName, baseClass= modal.Image.debian_slim, python_version = python_version)
+    uModal.makeDirectories(newDirectories)
     uModal.installUtils()
     if ffmpeg:
         uModal.installFFMPEG()
@@ -512,8 +514,32 @@ def initUAIContainer(appName="untitled", python_version = "3.11", firebaseServic
     uModal.applyAppImage()
     return uModal
 
-def initFullAppContainer(appName="untitled", python_version = "3.11", firebaseServiceJson = "", cudaVersion=12.4, fileDirectories =[], cmake=False,filesToDownload=[], filesToUnzip=[],gitModules=[], requirementsLocal="", requirementsServer="",postFunctions=[], pytorchCustom = "",ffmpeg=True) -> UAIModal:
-    uModal = initUAIContainer(appName=appName, python_version=python_version, firebaseServiceJson=firebaseServiceJson, cudaVersion=cudaVersion,pytorchCustom=pytorchCustom,ffmpeg=ffmpeg)
+def initFullAppContainer(appName="untitled", python_version="3.11", firebaseServiceJson="", cudaVersion=12.4, fileDirectories=[], cmake=False, filesToDownload=[], filesToUnzip=[], gitModules=[], requirementsLocal="", requirementsServer="", postFunctions=[], pytorchCustom="", ffmpeg=True, newDirectories=[]) -> UAIModal:
+    """
+    Initializes a full application container with the specified configurations.
+
+    Args:
+        appName (str, optional): The name of the application. Defaults to "untitled".
+        python_version (str, optional): The version of Python to use. Defaults to "3.11".
+        firebaseServiceJson (str, optional): The path to the Firebase service JSON file. Defaults to "".
+        cudaVersion (float, optional): The version of CUDA to use. Defaults to 12.4.
+        fileDirectories (list, optional): A list of file directories to copy to the container. Defaults to [].
+        cmake (bool, optional): Whether to install CMake. Defaults to False.
+        filesToDownload (list, optional): A list of files to download. Each item in the list should be a tuple containing the URL and the destination path. Defaults to [].
+        filesToUnzip (list, optional): A list of files to unzip. Each item in the list should be a tuple containing the source path and the destination path. Defaults to [].
+        gitModules (list, optional): A list of Git modules to install. Each item in the list should be a tuple containing the repository URL and the destination path. Defaults to [].
+        requirementsLocal (str, optional): The path to the local Python requirements file. Defaults to "".
+        requirementsServer (str, optional): The path to the server Python requirements file. Defaults to "".
+        postFunctions (list, optional): A list of functions to run after the container is initialized. Defaults to [].
+        pytorchCustom (str, optional): The path to the custom PyTorch installation. Defaults to "".
+        ffmpeg (bool, optional): Whether to install FFmpeg. Defaults to True.
+        newDirectories (list, optional): A list of new directories to create in the container. Defaults to [].
+
+    Returns:
+        UAIModal: The initialized UAIModal object.
+    """
+    
+    uModal = initUAIContainer(appName=appName, python_version=python_version, firebaseServiceJson=firebaseServiceJson, cudaVersion=cudaVersion, pytorchCustom=pytorchCustom, ffmpeg=ffmpeg, newDirectories=newDirectories)
     for gitModule in gitModules:
         uModal.installGitModule(gitModule[0], gitModule[1])
     if cmake:
