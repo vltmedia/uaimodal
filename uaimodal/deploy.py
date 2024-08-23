@@ -44,7 +44,7 @@ class UAIModal():
                       )
         .pip_install(["requests"])
         )
-        return self.image
+        return self
         
 
     def installAWS(self):
@@ -56,7 +56,7 @@ class UAIModal():
             self.image
             .pip_install(["botocore", "boto3"])
         )
-        return self.image
+        return self
 
 
     def installFlask(self):
@@ -69,7 +69,7 @@ class UAIModal():
         (self.image
                 .pip_install(["flask", "flask_cors"])
         )
-        return self.image
+        return self
         
 
     def installPythonRequirementsLocal(self, localPath:str = "requirements.txt"):
@@ -86,7 +86,7 @@ class UAIModal():
                 .copy_local_file(localPath, "/root/requirements.txt")
                 .run_commands(["pip install -r /root/requirements.txt"])
         )
-        return self.image
+        return self
         
     def installPythonRequirementsServer(self, serverPath:str = "/root/requirements.txt"):
         """
@@ -101,7 +101,7 @@ class UAIModal():
         (self.image
                 .run_commands([f"pip install -r {serverPath}"])
         )
-        return self.image
+        return self
 
     def copyLocalFileAndDirectories(self, items:list = []):
         """
@@ -127,7 +127,7 @@ class UAIModal():
                 self.image.copy_local_file(inputPath, outputPath)
             else:
                 self.image.copy_local_dir(inputPath, outputPath)
-        return self.image
+        return self
 
     def copyLocalFiles(self, files: list = []):
         """
@@ -143,7 +143,7 @@ class UAIModal():
             Image: The updated image with the copied files and directories.
         """
         self.copyLocalFileAndDirectories( files)
-        return self.image
+        return self
 
 
 
@@ -161,7 +161,7 @@ class UAIModal():
             Image: The updated image with the copied directories.
         """
         self.copyLocalFileAndDirectories( directories)
-        return self.image
+        return self
 
     def makeDirectories (self, directories: list = []):
         """
@@ -176,7 +176,7 @@ class UAIModal():
         """
         for directory in directories:
             self.image.run_commands([f"mkdir -p {directory}"])
-        return self.image
+        return self
 
         
     def getDictValue(self, dictionary: dict, key: str, defaultValue: object = None):
@@ -210,7 +210,7 @@ class UAIModal():
             Image: The updated image with the environment variable set.
         """
         self.image.env(variable)
-        return self.image
+        return self
         
 
     def setEnvironmentVariables(self, variables:list= []):
@@ -226,7 +226,7 @@ class UAIModal():
         for variable in variables:
             key = next(iter(variable))
             self.setEnvironmentVariable({key, variable[key]})
-        return self.image
+        return self
         
     def emptyFunction ():
         print("Empty Function")
@@ -260,7 +260,7 @@ class UAIModal():
             secrets = self.getDictValue(functDict, "secrets", [])
             function_ = self.getDictValue(functDict, "function", self.emptyFunction)
             self.image.run_function(function_, gpu=gpu, cpu=cpu, memory=memory, timeout=timeout, force_build=force_build, mounts=mounts, network_file_systems=network_file_systems, secrets=secrets)
-        return self.image
+        return self
 
     def installFirebase(self, serviceFile:str):
         """
@@ -276,7 +276,7 @@ class UAIModal():
                 .pip_install(["firebase_admin"])
                 .copy_local_file(serviceFile, "/root/serviceAccount.json")
         )
-        return self.image
+        return self
         
     def installCMake(self):
         """
@@ -290,7 +290,7 @@ class UAIModal():
                 .run_commands("apt install -y cmake")
             .pip_install(["cmake", "dlib"])
         )
-        return self.image
+        return self
 
     def installFFMPEG(self):
         """
@@ -303,7 +303,7 @@ class UAIModal():
         (self.image
                 .run_commands(["apt install -y ffmpeg libsm6 libxext6 "])
         )
-        return self.image
+        return self
 
     def installUAIDiffusers(self):
         """
@@ -333,7 +333,7 @@ class UAIModal():
             .run_commands(["pip uninstall basicsr -y"])
             .run_commands(["pip install git+https://github.com/vltmedia/BasicSR.git"])
         )
-        return self.image
+        return self
 
 
     def installPytorch(self, cudaVersion:int = 12.4,  customCommand:str = ""):
@@ -357,7 +357,7 @@ class UAIModal():
         if customCommand != "":
             command = customCommand
         self.image.run_commands([command])
-        return self.image
+        return self
         
     def installGitModule(self, gitUrl:str, outputPath = "/root"):
         """
@@ -374,7 +374,7 @@ class UAIModal():
             self.image
             .run_commands([f"git clone --recursive {gitUrl} /root/tempDir && cp -r /root/tempDir/. {outputPath}/ && rm -rf /root/tempDir"])
         )
-        return self.image
+        return self
 
     def installOpenCV(self):
         """
@@ -388,7 +388,7 @@ class UAIModal():
                 .run_commands(["apt-get install -y libgl1-mesa-glx libglib2.0-0"])
                 .pip_install(["opencv-python"])
         )
-        return self.image
+        return self
 
 
 
@@ -403,7 +403,7 @@ class UAIModal():
         (self.image
                 .pip_install(["moviepy"])
         )
-        return self.image
+        return self
 
 
 
@@ -420,7 +420,7 @@ class UAIModal():
         (self.image
                 .pip_install(["mediapipe"])
         )
-        return self.image
+        return self
 
     def installCuda12_4(self):
         """
@@ -443,7 +443,7 @@ class UAIModal():
                     ])
         .env({"CUDA_HOME": "/usr/local/cuda-12"})
         )
-        return self.image
+        return self
 
     def downloadFile(self, url:str, outputPath:str):
         """
@@ -458,7 +458,7 @@ class UAIModal():
         """
         self.image.run_commands(["ls /root/",f"wget -O {outputPath} \"{url}\" " ])
 
-        return self.image
+        return self
 
     def unzipFile(self, filePath:str, outputPath:str, removeOriginal:bool = True):
         """
@@ -475,7 +475,7 @@ class UAIModal():
         if removeOriginal:
             command += f" && rm {filePath}"
         self.image.run_commands([command])
-        return self.image
+        return self
         
 
 
