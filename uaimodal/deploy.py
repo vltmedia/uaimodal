@@ -371,7 +371,7 @@ class UAIModal():
             Image: The updated image object after the installation.
         """
         (
-            self
+            self.image
             .run_commands([f"git clone --recursive {gitUrl} /root/tempDir && cp -r /root/tempDir/. {outputPath}/ && rm -rf /root/tempDir"])
         )
         return self.image
