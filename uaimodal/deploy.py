@@ -259,7 +259,7 @@ class UAIModal():
             network_file_systems = self.getDictValue(functDict, "network_file_system", {})
             secrets = self.getDictValue(functDict, "secrets", [])
             function_ = self.getDictValue(functDict, "function", self.emptyFunction)
-            self.run_function(function_, gpu=gpu, cpu=cpu, memory=memory, timeout=timeout, force_build=force_build, mounts=mounts, network_file_systems=network_file_systems, secrets=secrets)
+            self.image.run_function(function_, gpu=gpu, cpu=cpu, memory=memory, timeout=timeout, force_build=force_build, mounts=mounts, network_file_systems=network_file_systems, secrets=secrets)
         return self.image
 
     def installFirebase(self, serviceFile:str):
