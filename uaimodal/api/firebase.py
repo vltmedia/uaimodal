@@ -2,10 +2,10 @@ from firebase_admin import credentials, initialize_app, storage, firestore
 from uaimodal.utils import rootPath 
 cred = None
 
-db : firestore.client.Client = None
+db  = None
 
 
-def initFirebase(servicePath="service.json" ,bucket = "bucket.appspot.com") -> tuple[firestore.client.Client, credentials.Certificate]:
+def initFirebase(servicePath="service.json" ,bucket = "bucket.appspot.com") :
     global db
     global cred
     
@@ -14,7 +14,7 @@ def initFirebase(servicePath="service.json" ,bucket = "bucket.appspot.com") -> t
     db = firestore.client()
     return db, cred
 
-def getDB() -> firestore.client.Client:
+def getDB() :
     global db
     if db is None:
         initFirebase()

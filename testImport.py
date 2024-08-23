@@ -1,5 +1,6 @@
 # Record Start and End Time
 import sys, os
+
 sys.path.append(os.path.abspath(os.path.dirname(__file__)))
 from modal import Image, gpu
 import modal
@@ -13,8 +14,12 @@ def main():
     startTime = time.time()
 
 
-    import uaimodal
-    image = uaimodal.initUAIContainer("testToKill-01", "3.11", "usher.json")
+    from uaimodal.utils import rootPath
+    from uaimodal.api import firebase
+    it = rootPath
+    print(it)
+    print(firebase.db)
+    # image = uaimodal.initUAIContainer("testToKill-01", "3.11", "usher.json")
 
     # mod = uaimodal.UAIModalImage()
 
