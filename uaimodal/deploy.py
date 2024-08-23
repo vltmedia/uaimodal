@@ -40,8 +40,9 @@ class UAIModal():
                 "apt update",
                 "apt install -y unzip wget git ",
                         ]
-                      .pip_install(["requests"])
+                      
                       )
+        .pip_install(["requests"])
         )
         return self.image
         
