@@ -39,11 +39,23 @@ class UAIModal():
         .run_commands([
                 "apt update",
                 "apt install -y unzip wget git ",
-                        ])
+                        ]
+                      .pip_install(["requests"])
+                      )
         )
         return self.image
         
 
+    def installAWS(self):
+        """
+        Installs the AWS Boto3 library in the given image.
+        
+        """
+        (
+            self.image
+            .pip_install(["botocore", "boto3"])
+        )
+        return self.image
 
 
     def installFlask(self):
