@@ -524,7 +524,6 @@ def initUAIContainer(appName="untitled", python_version = "3.11", firebaseServic
     uModal.installMoviePy()
     if firebaseServiceJson != "":
         uModal.installFirebase( firebaseServiceJson)
-    uModal.applyAppImage()
     return uModal
 
 def initFullAppContainer(appName="untitled", python_version="3.11", firebaseServiceJson="", cudaVersion=12.4, fileDirectories=[], cmake=False, filesToDownload=[], filesToUnzip=[], gitModules=[], requirementsLocal="", requirementsServer="", postFunctions=[], pytorchCustom="", ffmpeg=True, newDirectories=[]) -> UAIModal:
@@ -568,5 +567,4 @@ def initFullAppContainer(appName="untitled", python_version="3.11", firebaseServ
     if requirementsServer != "":
         uModal.installPythonRequirementsServer(requirementsServer)
     uModal.runFunctions(postFunctions)
-    uModal.applyAppImage()
     return uModal
