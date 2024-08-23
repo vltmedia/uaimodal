@@ -8,8 +8,10 @@ pythonPath = "python"
 projectDir = f"{rootPath}"
 
 def getRootPath(defaultPath = "/root"):
+    global rootPath
     if not os.path.exists(defaultPath):
-        defaultPath = os.path.dirname(__file__)
+        defaultPath = "/root"
+    rootPath = defaultPath
     return defaultPath
 
 

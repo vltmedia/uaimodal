@@ -14,11 +14,11 @@ def main():
     startTime = time.time()
 
 
-    from uaimodal.utils import rootPath
-    from uaimodal.api import firebase
+    from uaimodal.utils import rootPath, GetURLBytes
+    from uaimodal.api.firebase import db
     it = rootPath
     print(it)
-    print(firebase.db)
+    print(db)
     # image = uaimodal.initUAIContainer("testToKill-01", "3.11", "usher.json")
 
     # mod = uaimodal.UAIModalImage()
