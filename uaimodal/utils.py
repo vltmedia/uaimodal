@@ -59,3 +59,20 @@ def ReadFromPathBase64(path):
     with open(path, "rb") as f:
         return BytesToBase64(f.read())
     
+
+def GetDictValue(dictionary: dict, key: str, defaultValue: object = None):
+    """
+    Retrieves the value associated with the given key from the dictionary.
+    
+    Args:
+        dictionary (dict): The dictionary to retrieve the value from.
+        key (str): The key to look for in the dictionary.
+        defaultValue (object, optional): The default value to return if the key is not found. 
+            Defaults to None.
+    
+    Returns:
+        object: The value associated with the key if found, otherwise the defaultValue.
+    """
+    if key not in dictionary:
+        return defaultValue
+    return dictionary[key]
