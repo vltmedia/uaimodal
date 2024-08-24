@@ -1,4 +1,4 @@
-::: uaimodal.deploy
+::: uaimodal.api.firebase
     handler: python
     members:
       - MergePytorchBins

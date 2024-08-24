@@ -2,6 +2,8 @@ site_name: "UAI Modal"
 nav:
   - "Home": index.md
   - "Deploy": deploy.md
+  - "Jobs": jobs.md
+  - "Utils": utils.md
 theme:
   name: "material"
   features:

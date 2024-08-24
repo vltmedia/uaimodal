@@ -43,8 +43,20 @@ def upload_file_to_space(file_src, save_as, **kwargs):
     blob.make_public()
     return blob.public_url 
 
+def initDoc(collection) -> str:
+    """
+    Generate a new document in the collection and return the document ID. This is useful so you don't have to create the document id and possibly have duplicates.
+    Args:
+        str: The name of the collection where the document will be created.
+    Returns:
+        str: The ID of the newly created document.
+    """
+    db = getDB()
+    doc_ref = db.collection(collection)
+    docID = doc_ref.add({"name":""}).id
+    return docID
 
-def getDoc(collection, doc):
+def getDoc(collection, doc) ->dict | None:
     db = getDB()
     doc_ref = db.collection(collection).document(doc)
     doc = doc_ref.get()
@@ -53,10 +65,12 @@ def getDoc(collection, doc):
     else:
         return None
     
-def setDoc(collection, doc, data):
+def setDoc(collection, doc, data) -> dict:
     db = getDB()
     doc_ref = db.collection(collection).document(doc)
     doc_ref.set(data)
+    doc_updated = doc_ref.get()
+    return doc_updated.to_dict()
     
 def getCollection(collection):
     db = getDB()
@@ -128,3 +142,61 @@ def getStorageBlob(path):
     bucket = storage.bucket()
     return bucket.blob(path)
 
+def getJob(jobId, state="pending"):
+    if state == "pending":
+        return getDoc("jobs_pending", jobId)
+    elif state == "running":
+        return getDoc("jobs_running", jobId)
+    elif state == "finished":
+        return getDoc("jobs_finished", jobId)
+    
+def findJob(jobId):
+    state = "pending"
+    job = getJob(jobId, "pending")
+    if job is None:
+        state = "running"
+        job = getJob(jobId, "running")
+    if job is None:
+        state = "finished"
+        job = getJob(jobId, "finished")
+    return job, state
+
+def setJob(jobId, data, state="pending"):
+    ## set job to the correct state queue, then delete from the previous queue.
+    job_, prevState = findJob(jobId)
+    if job_ is not None:
+        deleteDoc(f"jobs_{prevState}", jobId)
+    setDoc(f"jobs_{state}", jobId, data)
+    
+def setJobPending(jobId, data):
+    setJob(jobId, data, "pending")
+    
+def setJobRunning(jobId, data):
+    setJob(jobId, data, "running")
+    
+def setJobFinished(jobId, data):
+    setJob(jobId, data, "finished")
+    
+def deleteJob(jobId):
+    job_, state = findJob(jobId)
+    if job_ is not None:
+        deleteDoc(f"jobs_{state}", jobId)
+        
+def getPendingJobs():
+    return getCollection("jobs_pending")
+
+def getRunningJobs():
+    return getCollection("jobs_running")
+
+def getFinishedJobs():
+    return getCollection("jobs_finished")
+
+def getJobs():
+    return getPendingJobs() + getRunningJobs() + getFinishedJobs()
+
+def getJobResults(jobId):
+    return getDoc("jobs_finished", jobId)
+
+
+
+    

@@ -1,4 +1,5 @@
-::: uaimodal.deploy
+::: uaimodal.utils
+    title: Utils
     handler: python
     members:
       - MergePytorchBins
