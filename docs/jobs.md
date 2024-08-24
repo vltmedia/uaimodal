@@ -1,4 +1,4 @@
-::: uaimodal.api.job
+::: api.job
     handler: python
     members:
       - MergePytorchBins

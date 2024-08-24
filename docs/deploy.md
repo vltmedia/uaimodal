@@ -1,4 +1,4 @@
-::: uaimodal.deploy
+::: deploy
     handler: python
     members:
       - MergePytorchBins

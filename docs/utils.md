@@ -1,4 +1,4 @@
-::: uaimodal.utils
+::: utils
     title: Utils
     handler: python
     members:
