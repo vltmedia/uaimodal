@@ -144,12 +144,13 @@ def updateJobResult(jobId, data, inputJob=None):
     Returns:
         None
     """
+    import json
     if inputJob is None:
         job_, state = findJob(jobId)
     else:
         job_ = inputJob
     if job_ is not None:
-        job_["result"] = data
+        job_["result"] = json.dumps(data, indent=4)
         setJobFinished(jobId, job_)
         
 def deleteJob(jobId):
