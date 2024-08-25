@@ -56,7 +56,7 @@ def initDoc(collection) -> str:
     docID = doc_ref.add({"name":""}).id
     return docID
 
-def getDoc(collection, doc) ->dict | None:
+def getDoc(collection, doc) ->dict:
     db = getDB()
     doc_ref = db.collection(collection).document(doc)
     doc = doc_ref.get()
