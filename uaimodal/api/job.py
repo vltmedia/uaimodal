@@ -93,14 +93,15 @@ def setJob(jobId, data, state="pending") -> dict:
     
 def setJobPending(jobId, data) -> dict:
     """
-    Sets the job status to 'pending' for the given jobId.
+    Sets the status of a job to 'pending'.
 
-    Parameters:
-    - jobId (int): The ID of the job.
-    - data (dict): Additional data for the job.
+    Args:
+        jobId (int): The ID of the job.
+        data (dict): Additional data for the job.
 
     Returns:
-    - dict: A dictionary containing the updated job information.
+        dict: The updated job information.
+
     """
     return setJob(jobId, data, "pending")
     
@@ -132,7 +133,7 @@ def setJobFinished(jobId, data) -> dict:
     return setJob(jobId, data, "finished")
     
 
-def updateJobResult(jobId, data):
+def updateJobResult(jobId, data, inputJob=None):
     """
     Updates the result of a job with the given jobId. Also sets the job status to 'finished'.
 
@@ -143,7 +144,10 @@ def updateJobResult(jobId, data):
     Returns:
         None
     """
-    job_, state = findJob(jobId)
+    if inputJob is None:
+        job_, state = findJob(jobId)
+    else:
+        job_ = inputJob
     if job_ is not None:
         job_["result"] = data
         setJobFinished(jobId, job_)
