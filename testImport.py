@@ -16,7 +16,7 @@ def main():
 
     from uaimodal.utils import rootPath, GetURLBytes
     from uaimodal.api.firebase import db
-    from uaimodal.api.firebase import getJob
+    from uaimodal.api.job import getJob
     it = rootPath
     print(it)
     print(db)

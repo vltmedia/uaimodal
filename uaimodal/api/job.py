@@ -131,6 +131,23 @@ def setJobFinished(jobId, data) -> dict:
     """
     return setJob(jobId, data, "finished")
     
+
+def updateJobResult(jobId, data):
+    """
+    Updates the result of a job with the given jobId.
+
+    Args:
+        jobId (str): The ID of the job to update.
+        data (any): The result data to be assigned to the job.
+
+    Returns:
+        None
+    """
+    job_, state = findJob(jobId)
+    if job_ is not None:
+        job_["result"] = data
+        setJob(jobId, job_, "finished")
+        
 def deleteJob(jobId):
     """
     Deletes a job with the given jobId.
